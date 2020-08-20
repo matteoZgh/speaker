@@ -1,7 +1,8 @@
 import aip
 import vlc
 
-def getAudio(text,filename):
+
+def getaudio(text,filename) :
     APP_ID = '14891501'
     API_KEY = 'EIm2iXtvDSplvR5cyHU8dAeM'
     SECRET_KEY = '4KkGGzTq2GVrBEYPLXXWEEIoyLL1F6Zt'
@@ -22,11 +23,29 @@ def getAudio(text,filename):
         with open(filename, 'wb') as f:
             f.write(result)
 
-if __name__=='__main__':
-    while(True):
-        str = input('speak: ')
-        if str == 'quit':
-            break
-        getAudio(str,'./audio.mp3')
-        player = vlc.MediaPlayer('./audio.mp3')
-        player.play()
+
+def playsound(words) :
+    getaudio(words, './audio.mp3')
+    player = vlc.MediaPlayer('./audio.mp3')
+    player.play()
+
+
+if __name__ == '__main__' :
+    text = []
+    index = -1
+    while True :
+        words = input('speake: ')
+        if words == 'q' :
+            exit()
+        elif words == 'l' :
+            with open('text.txt', 'r') as f :
+                text = f.readlines()
+                index = 0
+        elif words == 'n' :
+            if index != -1 :
+                playsound(text[index])
+                index += 1
+            else :
+                print('No text')
+        else :
+            playsound(words)
