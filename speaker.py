@@ -17,7 +17,7 @@ def getaudio(text,filename) :
        :return:
     """
 
-    result = client.synthesis(text, 'zh', 1, {'spd': 4, 'vol': 3, 'per': 4})
+    result = client.synthesis(text, 'zh', 1, {'spd': 3, 'vol': 3, 'per': 3})
 
     if not isinstance(result, dict):
         with open(filename, 'wb') as f:
@@ -34,18 +34,24 @@ if __name__ == '__main__' :
     text = []
     index = -1
     while True :
-        words = input('speake: ')
-        if words == 'q' :
-            exit()
-        elif words == 'l' :
-            with open('text.txt', 'r') as f :
-                text = f.readlines()
-                index = 0
-        elif words == 'n' :
-            if index != -1 :
-                playsound(text[index])
-                index += 1
+        try :
+            words = input('speak:')
+            if words == 'q' :
+                exit(0)
+            elif words == 'l' :
+                with open('text.txt', 'r') as f :
+                    text = f.readlines()
+                    index = 0
+            elif words == 'n' :
+                if index != -1 and index < len(text):
+                    playsound(text[index])
+                    index += 1
+                else :
+                    print('No text')
+            elif words == '' :
+                print('No input')
             else :
-                print('No text')
-        else :
-            playsound(words)
+                playsound(words)
+        except UnicodeDecodeError :
+            print('UnicodeDecodeError')
+            continue
