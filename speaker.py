@@ -1,5 +1,5 @@
 import aip
-import playsound
+import vlc
 
 def getAudio(text,filename):
     APP_ID = '14891501'
@@ -27,6 +27,6 @@ if __name__=='__main__':
         str = input('speak: ')
         if str == 'quit':
             break
-        getAudio(str,'audio.mp3')
-        playsound.playsound(sound='audio.mp3')
-
+        getAudio(str,'./audio.mp3')
+        player = vlc.MediaPlayer('./audio.mp3')
+        player.play()
